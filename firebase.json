@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/uptimeai",
+    "public": "dist/uptimeai/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
