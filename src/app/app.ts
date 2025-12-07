@@ -5,7 +5,7 @@ import { ContributionHeatmap } from './page/contribution-heatmap/contribution-he
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, User, ContributionHeatmap],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
