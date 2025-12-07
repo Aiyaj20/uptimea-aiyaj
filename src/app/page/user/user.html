@@ -1,0 +1,219 @@
+<app-header></app-header>
+<div class="container py-4">
+    <div class="row g-4">
+        <div class="col-12 col-lg-4">
+            <div class="card p-3 text-center shadow-sm rounded-4" *ngIf="user">
+                <img [src]="user?.avatar_url" class="rounded-circle mb-3 profile-img">
+                <h3 class="fw-bold">{{ user.name }}</h3>
+                <p class="text-muted">{{ user.bio }}</p>
+                <button class="btn btn-outline-primary w-100 mb-3">Edit Profile</button>
+                <ul class="list-unstyled text-start small">
+                    <li><strong>{{ user.followers }}</strong> followers •
+                        <strong>{{ user.following }}</strong> following
+                    </li>
+                    <li>🏢 {{ user.company }}</li>
+                    <li><svg class="octicon octicon-location" viewBox="0 0 16 16" version="1.1" width="16" height="16"
+                            aria-hidden="true">
+                            <path
+                                d="m12.596 11.596-3.535 3.536a1.5 1.5 0 0 1-2.122 0l-3.535-3.536a6.5 6.5 0 1 1 9.192-9.193 6.5 6.5 0 0 1 0 9.193Zm-1.06-8.132v-.001a5 5 0 1 0-7.072 7.072L8 14.07l3.536-3.534a5 5 0 0 0 0-7.072ZM8 9a2 2 0 1 1-.001-3.999A2 2 0 0 1 8 9Z">
+                            </path>
+                        </svg> {{ user.location }}</li>
+                    <li>🔗 <a [href]="user.blog" target="_blank">{{ user.blog }}</a></li>
+                    <li>🐦 @{{ user.twitter_username }}</li>
+                </ul>
+                <div style="border-top: 1px solid;text-align: left;"><br>
+                    <h6>Achievements</h6>
+                    <div>
+                        <img src="https://github.githubassets.com/assets/pull-shark-default-498c279a747d.png"
+                            data-hovercard-type="achievement" width="64" alt="Achievement: Pull Shark"
+                            data-view-component="true" class="achievement-badge-sidebar"
+                            aria-keyshortcuts="Alt+ArrowUp">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-8">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="fw-bold">Popular Repositories</span>
+                <span class="text-muted" style="font-size: 10px;"><a href="">Customize your pins</a></span>
+            </div>
+            <div class="row g-3">
+                <ng-container *ngIf="loading">
+                    <div class="col-12 col-md-6" *ngFor="let load of [1,2,3,4,5,6]">
+                        <div class="card p-3 rounded-4 shadow-sm">
+                            <div class="placeholder bg-light mb-2 rounded-3 p-3"></div>
+                            <div class="placeholder bg-light rounded-3 p-2"></div>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-container *ngIf="!loading">
+                    <div class="col-12 col-md-6" *ngFor="let repo of Repositories">
+                        <div class="card p-3 rounded-4 shadow-sm" style="min-height: 165px;max-height: 165px;">
+
+                            <div class="d-flex justify-content-between">
+                                <a [href]="repo.html_url" target="_blank"
+                                    class="fw-bold text-primary text-decoration-none">
+                                    {{ repo.name }}
+                                </a>
+                                <span class="badge bg-light text-dark">{{ repo.visibility }}</span>
+                            </div>
+
+                            <p class="text-muted small mt-2">{{ repo.description || 'No description' }}</p>
+
+                            <div class="d-flex align-items-center gap-3 mt-2">
+                                <span class="small">
+                                    ⭐ {{ repo.stargazers_count }}
+                                </span>
+                                <span class="small">
+                                    🍴 {{ repo.forks_count }}
+                                </span>
+
+                                <span class="small" *ngIf="repo.language">
+                                    ● {{ repo.language }}
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <br>
+            <div class="row g-3">
+                <div class="col-10 col-md-10">
+                    <div class="card p-3 rounded-4 shadow-sm">
+                        <div class="heatmap-wrapper">
+                            <div class="d-flex mb-1">
+                                <div style="width: 20px"></div>
+                                <!-- <div class="d-flex position-relative">
+                                    <div *ngFor="let w of monthLabels; let i = index" class="week">
+                                        <div *ngFor="let week of weeks;" class="d-flex flex-column me-1">
+                                            <div *ngFor="let day of week; let k = index"  
+                                                [title]="day.date + ': ' + day.count + ' contributions'">
+                                                <span class="month-label">{{Monthre(day.date,k,w)}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="d-flex">
+                                <div class="d-flex flex-column me-1">
+                                    <div *ngFor="let day of ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']"
+                                        class="day-label">{{ day }}</div>
+                                </div>
+                                <div class="d-flex">
+                                    <div *ngFor="let week of weeks;" class="d-flex flex-column me-1">
+                                        <div *ngFor="let day of week" [style.background]="getColor(day.level)"
+                                            class="day-square" [title]="day.date + ': ' + day.count + ' contributions'">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="activity-feed card p-3 rounded-4 shadow-sm mt-3">
+                        <h5 class="fw-bold mb-3">Contribution activity</h5>
+
+                        <div *ngFor="let item of activities" class="activity-item d-flex align-items-start mb-3">
+                            <div class="activity-icon me-3">
+                                <ng-container [ngSwitch]="item.type">
+                                    <i *ngSwitchCase="'commit'" class="bi bi-arrow-repeat"></i>
+                                    <i *ngSwitchCase="'repo'" class="bi bi-folder"></i>
+                                </ng-container>
+                            </div>
+
+                            <div class="activity-content flex-grow-1">
+                                <div class="activity-title mb-1">
+                                    <span *ngIf="item.type === 'commit'">Created {{ item.count }} commit{{ item.count >
+                                        1 ? 's' : '' }} in </span>
+                                    <span *ngIf="item.type === 'repo'">Created {{ item.count }} repository</span>
+                                    <a [href]="item.repoLink" target="_blank" class="repo-link">{{ item.repoName }}</a>
+                                    <span *ngIf="item.type === 'commit' && item.count > 1" class="commit-link">
+                                        <a [href]="item.repoLink + '/commits'" target="_blank">{{ item.count }}
+                                            commits</a>
+                                    </span>
+                                </div>
+
+                                <div class="activity-meta text-muted d-flex align-items-center">
+                                    <span *ngIf="item.language" class="language-dot me-2"
+                                        [style.background]="item.languageColor"></span>
+                                    <span>{{ item.language }}</span>
+                                    <span class="ms-auto">{{ item.date | date:'MMM d' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="activity-feed bg-white p-4 rounded-4 ">
+                        <h5 class="fw-bold mb-4">Contribution Activity</h5>
+
+
+                        <!-- Loop through activities -->
+                        <div *ngFor="let item of activities"
+                            class="activity-item d-flex align-items-start p-3 mb-3 rounded-3  ">
+                            <div class="activity-content flex-grow-1">
+                                <div class="activity-title fw-semibold mb-2">
+                                    <ng-container [ngSwitch]="item.type">
+                                        <span *ngSwitchCase="'commit'">
+                                            Created {{ item.count }} commit{{ item.count > 1 ? 's' : '' }} in
+                                            <a [href]="item.repoLink" target="_blank"
+                                                class="text-decoration-none fw-bold">
+                                                {{ item.repoName }}
+                                            </a>
+                                        </span>
+                                        <span *ngSwitchCase="'pr'">
+                                            Opened {{ item.count }} pull request{{ item.count > 1 ? 's' : '' }} in
+                                            <span class="fw-bold">{{ item.repoCount }} repositories</span>
+                                        </span>
+                                        <span *ngSwitchCase="'repo'">
+                                            Created {{ item.count }} new repository
+                                        </span>
+                                    </ng-container>
+                                </div>
+
+
+                                <!-- PR Repository List -->
+                                <ul *ngIf="item.type === 'pr'" class="list-unstyled ps-3 small">
+                                    <li *ngFor="let pr of item.prs" class="mb-1">
+                                        {{ pr.name }} —
+                                        <span *ngIf="pr.merged" class="badge bg-primary">{{ pr.merged }} merged</span>
+                                        <span *ngIf="pr.open" class="badge bg-success">{{ pr.open }} open</span>
+                                    </li>
+                                </ul>
+
+
+                                <!-- Meta -->
+                                <div class="activity-meta text-muted small d-flex align-items-center">
+                                    <span *ngIf="item.language" class="language-dot me-2"
+                                        [style.background]="item.languageColor"></span>
+                                    <span>{{ item.language }}</span>
+                                    <span class="ms-auto">{{ item.date | date:'MMM d' }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 text-center border btn border">
+                            Show more activity
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-2 col-md-2">
+                    <button *ngFor="let year of years" (click)="selectYear(year)"
+                        [class.btn-primary]="selectedYear === year" class="btn btn me-2">
+                        {{ year }}
+                    </button>
+                </div>
+            </div>
+            <p class="color-fg-muted f6 mt-4">
+                Seeing something unexpected? Take a look at the
+                <a class="Link--inTextBlock"
+                    href="https://docs.github.com/categories/setting-up-and-managing-your-github-profile">GitHub profile
+                    guide</a>.
+            </p>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

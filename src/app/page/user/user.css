@@ -1,0 +1,172 @@
+.card {
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    object-fit: cover;
+}
+
+@media (max-width: 767px) {
+    img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+.heatmap {
+    display: grid;
+    grid-template-columns: repeat(53, 12px);
+    gap: 3px;
+}
+
+.day-square {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+.day-square {
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.week {
+    display: flex;
+    flex-direction: column;
+}
+
+.month-label {
+    font-size: 10px;
+    position: relative;
+    left: 0;
+    white-space: nowrap;
+    margin-bottom: 3px;
+}
+
+.day-label {
+    height: 12px;
+    font-size: 10px;
+    line-height: 12px;
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+img {
+    object-fit: cover;
+}
+
+.heatmap-wrapper {
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.heatmap-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.heatmap-wrapper::-webkit-scrollbar-thumb {
+    background-color: #c1c1c1;
+    border-radius: 3px;
+}
+
+.week {
+    display: flex;
+    flex-direction: column;
+}
+
+.day-square {
+    width: 10px;
+    height: 10px;
+    margin-bottom: 2px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.month-label {
+    font-size: 10px;
+    white-space: nowrap;
+    margin-bottom: 3px;
+}
+
+.day-label {
+    height: 12px;
+    font-size: 10px;
+    line-height: 12px;
+    margin-bottom: 2px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+.activity-feed {
+    max-width: 700px;
+}
+
+.activity-item {
+    display: flex;
+}
+
+.activity-icon {
+    font-size: 20px;
+    color: #6a737d;
+    margin-top: 2px;
+}
+
+.activity-title a.repo-link {
+    color: #0366d6;
+    text-decoration: none;
+}
+
+.activity-title a.repo-link:hover {
+    text-decoration: underline;
+}
+
+.activity-title .commit-link a {
+    color: #6a737d;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.activity-meta {
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.language-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.activity-feed {
+    font-family: system-ui, sans-serif;
+}
+
+
+.activity-item {
+    transition: 0.2s ease-in-out;
+}
+
+
+.activity-item:hover {
+    background: #f8f9fa !important;
+    transform: translateY(-1px);
+}
+
+
+.language-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
